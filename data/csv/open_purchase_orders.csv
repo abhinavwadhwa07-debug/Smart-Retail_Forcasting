@@ -1,0 +1,6 @@
+id,sku_id,qty,eta,status,supplier_id
+PO-2291,toned-milk-500ml,120,2026-11-11,on time,sup-gokul
+PO-2288,brown-bread-400g,24,2026-11-11,on time,sup-sunrise
+PO-2296,festive-sweets-box-500g,60,2026-11-13,late 2 days,sup-mithas
+PO-2283,wheat-atta-5kg,40,2026-11-14,on time,sup-annapurna
+PO-2279,imported-cheese-spread,24,2026-11-12,cancel suggested,sup-coldchain

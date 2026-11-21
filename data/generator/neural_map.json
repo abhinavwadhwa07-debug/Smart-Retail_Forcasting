@@ -1,0 +1,1384 @@
+{
+ "label": "Smart Retail Intelligence Network",
+ "desc": "An AI/ML system that forecasts demand per product per day, flags stock that is expiring, dead or losing shelf presence, catches demand hikes early, makes the supply chain transparent, and turns all of it into clear daily actions for store workers and managers.",
+ "details": [
+  "Base repo: Smart Retail Precision Demand Forecasting & Dynamic Pricing Engine (Python, pandas, LightGBM, SciPy)",
+  "Unit of analysis: one SKU x one store x one day",
+  "North-star outcome: less waste, fewer stockouts, healthier margin, less guesswork for workers"
+ ],
+ "status": "partial",
+ "prompt": "You are helping build the Smart Retail Intelligence Network: a Python AI/ML system that forecasts SKU-day demand, detects expiry risk, dead stock, weak shelf presence and demand spikes, scores supplier transparency, compares weak SKUs against well-fulfilled peers, and outputs plain-language daily actions for retail workers. The existing repo has data_loader.py (cleaning + zero-filled daily grid), features.py (calendar, lag 1/7/14/30, rolling 7/30, price ratio), forecasting.py (WAPE + expanding-window CV with LightGBM Tweedie) and pricing_engine.py (log-log elasticity + bounded profit optimisation with a 1.15x cost floor). Keep code typed, tested with pytest, leakage-free, and explainable.",
+ "kind": "root",
+ "children": [
+  {
+   "label": "Problem & Vision",
+   "desc": "The retail pain points the network exists to remove, and what success looks like.",
+   "details": [],
+   "status": "live",
+   "prompt": "Write a crisp problem statement and vision for a retail AI that tackles expired stock, dead stock, weak shelf presence, missed demand hikes and opaque supply chains. Quantify the cost of each pain point for a mid-size Indian grocery/FMCG store and define measurable success targets.",
+   "kind": "branch",
+   "children": [
+    {
+     "label": "Expired & near-expiry stock",
+     "desc": "Perishables and short-shelf-life goods that cross their expiry date unsold become write-offs and waste.",
+     "details": [
+      "Signal: on-hand batch qty > forecast demand over remaining shelf life",
+      "Cost: write-off value, disposal cost, lost shelf space",
+      "Lever: FEFO picking, early markdown, transfer, donation"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Problem & Vision > Expired & near-expiry stock. Perishables and short-shelf-life goods that cross their expiry date unsold become write-offs and waste. Known points: Signal: on-hand batch qty > forecast demand over remaining shelf life; Cost: write-off value, disposal cost, lost shelf space; Lever: FEFO picking, early markdown, transfer, donation. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-1-1"
+    },
+    {
+     "label": "Dead & slow-moving stock",
+     "desc": "SKUs with little or no demand that tie up cash and shelf space.",
+     "details": [
+      "Signal: long zero-sale streaks, falling sell-through, high weeks-of-cover",
+      "Lever: clearance, bundling, return-to-vendor, delist"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Problem & Vision > Dead & slow-moving stock. SKUs with little or no demand that tie up cash and shelf space. Known points: Signal: long zero-sale streaks, falling sell-through, high weeks-of-cover; Lever: clearance, bundling, return-to-vendor, delist. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-1-2"
+    },
+    {
+     "label": "Weak shelf presence",
+     "desc": "Products that exist in the store but are not visible or available enough to sell (phantom stock, poor facing, out-of-shelf).",
+     "details": [
+      "Signal: system stock > 0 but sales = 0 for an unusually long run",
+      "Signal: sales far below peers with similar price and category",
+      "Lever: re-facing, planogram fix, cycle count"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Problem & Vision > Weak shelf presence. Products that exist in the store but are not visible or available enough to sell (phantom stock, poor facing, out-of-shelf). Known points: Signal: system stock > 0 but sales = 0 for an unusually long run; Signal: sales far below peers with similar price and category; Lever: re-facing, planogram fix, cycle count. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-1-3"
+    },
+    {
+     "label": "Missed demand hikes",
+     "desc": "Sudden surges (festivals, weather, viral trends, competitor stockout) that cause stockouts and lost sales.",
+     "details": [
+      "Signal: forecast residuals breaking the P90 band, changepoints",
+      "Lever: early reorder, safety stock bump, staff reallocation"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Problem & Vision > Missed demand hikes. Sudden surges (festivals, weather, viral trends, competitor stockout) that cause stockouts and lost sales. Known points: Signal: forecast residuals breaking the P90 band, changepoints; Lever: early reorder, safety stock bump, staff reallocation. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-1-4"
+    },
+    {
+     "label": "Opaque supply chain",
+     "desc": "Store teams cannot see where an order is, how reliable a supplier is, or which batch came from where.",
+     "details": [
+      "Signal: lead-time variance, OTIF misses, short shipments",
+      "Lever: supplier scorecards, ETA prediction, batch traceability"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Problem & Vision > Opaque supply chain. Store teams cannot see where an order is, how reliable a supplier is, or which batch came from where. Known points: Signal: lead-time variance, OTIF misses, short shipments; Lever: supplier scorecards, ETA prediction, batch traceability. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-1-5"
+    },
+    {
+     "label": "Worker burden",
+     "desc": "Staff spend time on manual counts, guesswork ordering and firefighting instead of serving customers.",
+     "details": [
+      "Goal: one short, ranked task list per shift",
+      "Goal: every alert comes with a reason in plain language (English / Hindi)"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Problem & Vision > Worker burden. Staff spend time on manual counts, guesswork ordering and firefighting instead of serving customers. Known points: Goal: one short, ranked task list per shift; Goal: every alert comes with a reason in plain language (English / Hindi). Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-1-6"
+    },
+    {
+     "label": "Success targets",
+     "desc": "What the pilot must prove.",
+     "details": [
+      "Waste / expiry write-off down 20-30%",
+      "Stockout rate down 15-25%",
+      "Forecast WAPE below 35% on A-class SKUs",
+      "Inventory turns up, GMROI up",
+      "Worker time on ordering down 30%"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Problem & Vision > Success targets. What the pilot must prove. Known points: Waste / expiry write-off down 20-30%; Stockout rate down 15-25%; Forecast WAPE below 35% on A-class SKUs; Inventory turns up, GMROI up; Worker time on ordering down 30%. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-1-7"
+    }
+   ],
+   "id": "n-1"
+  },
+  {
+   "label": "People & Users",
+   "desc": "Who touches the system and what each one needs from it.",
+   "details": [],
+   "status": "planned",
+   "prompt": "Create user personas and jobs-to-be-done for a retail demand-intelligence system: store manager, floor/shelf worker, buyer/procurement, warehouse staff, supplier, owner/finance. For each: goals, pains, decisions they make, the screen they need, and the alerts they should and should not receive.",
+   "kind": "branch",
+   "children": [
+    {
+     "label": "Store manager",
+     "desc": "Owns store P&L; approves orders, markdowns and transfers.",
+     "details": [
+      "Needs: morning brief, exceptions only, approve/override buttons"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > People & Users > Store manager. Owns store P&L; approves orders, markdowns and transfers. Known points: Needs: morning brief, exceptions only, approve/override buttons. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-2-1"
+    },
+    {
+     "label": "Floor & shelf workers",
+     "desc": "Restock, face, count, mark down and pull expiring items.",
+     "details": [
+      "Needs: ranked task list, barcode scan, bilingual UI, voice, big touch targets",
+      "Must never be blamed by the system; tasks are suggestions with reasons"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > People & Users > Floor & shelf workers. Restock, face, count, mark down and pull expiring items. Known points: Needs: ranked task list, barcode scan, bilingual UI, voice, big touch targets; Must never be blamed by the system; tasks are suggestions with reasons. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-2-2"
+    },
+    {
+     "label": "Buyer / procurement",
+     "desc": "Decides what and how much to order from whom.",
+     "details": [
+      "Needs: forecast P10-P90, recommended order qty, supplier scorecard"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > People & Users > Buyer / procurement. Decides what and how much to order from whom. Known points: Needs: forecast P10-P90, recommended order qty, supplier scorecard. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-2-3"
+    },
+    {
+     "label": "Warehouse / DC",
+     "desc": "Receives, stores, picks and ships.",
+     "details": [
+      "Needs: FEFO pick lists, inbound ETA, transfer requests"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > People & Users > Warehouse / DC. Receives, stores, picks and ships. Known points: Needs: FEFO pick lists, inbound ETA, transfer requests. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-2-4"
+    },
+    {
+     "label": "Suppliers",
+     "desc": "Deliver goods; benefit from shared forecasts.",
+     "details": [
+      "Needs: portal with demand outlook and their own OTIF score"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > People & Users > Suppliers. Deliver goods; benefit from shared forecasts. Known points: Needs: portal with demand outlook and their own OTIF score. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-2-5"
+    },
+    {
+     "label": "Owner / finance",
+     "desc": "Cares about margin, cash in stock, waste.",
+     "details": [
+      "Needs: KPI dashboard, waste and margin trend, ROI of the system"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > People & Users > Owner / finance. Cares about margin, cash in stock, waste. Known points: Needs: KPI dashboard, waste and margin trend, ROI of the system. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-2-6"
+    },
+    {
+     "label": "Customers (indirect)",
+     "desc": "Feel the result: fresher shelves, fewer stockouts, fair prices.",
+     "details": [
+      "Guardrail: no surge pricing on essentials"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > People & Users > Customers (indirect). Feel the result: fresher shelves, fewer stockouts, fair prices. Known points: Guardrail: no surge pricing on essentials. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-2-7"
+    }
+   ],
+   "id": "n-2"
+  },
+  {
+   "label": "Data Layer",
+   "desc": "Every input the network learns from, and the rules that make it trustworthy.",
+   "details": [],
+   "status": "partial",
+   "prompt": "Design the data layer for a retail demand-intelligence system. Define schemas (column, type, grain, key) for POS sales, inventory batches with expiry, product master, purchase orders and receipts, prices/promotions, calendar/festivals, weather and store ops. Include data-quality rules, the zero-filled SKU-day grid, and how each table joins.",
+   "kind": "branch",
+   "children": [
+    {
+     "label": "POS transactions",
+     "desc": "Line-level sales: item, quantity, unit price, timestamp, store. Currently the UCI Online Retail II dataset.",
+     "details": [
+      "Repo: load_raw_transactions() reads CSV with ISO-8859-1",
+      "Column aliasing: StockCode/item_id, UnitPrice/Price, InvoiceDate/date"
+     ],
+     "status": "live",
+     "prompt": "Context: Smart Retail Intelligence Network > Data Layer > POS transactions. Line-level sales: item, quantity, unit price, timestamp, store. Currently the UCI Online Retail II dataset. Known points: Repo: load_raw_transactions() reads CSV with ISO-8859-1; Column aliasing: StockCode/item_id, UnitPrice/Price, InvoiceDate/date. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-3-1"
+    },
+    {
+     "label": "Cleaning rules",
+     "desc": "Drop invalid rows so the model sees real demand only.",
+     "details": [
+      "Repo: drop nulls, empty IDs, quantity <= 0, price <= 0",
+      "Floor timestamps to day; gross_revenue = qty x price",
+      "Planned: keep returns/cancellations in a separate table instead of discarding them"
+     ],
+     "status": "live",
+     "prompt": "Context: Smart Retail Intelligence Network > Data Layer > Cleaning rules. Drop invalid rows so the model sees real demand only. Known points: Repo: drop nulls, empty IDs, quantity <= 0, price <= 0; Floor timestamps to day; gross_revenue = qty x price; Planned: keep returns/cancellations in a separate table instead of discarding them. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-3-2"
+    },
+    {
+     "label": "Zero-filled daily grid",
+     "desc": "Full Cartesian product of active SKUs x calendar days so zero-sale days are explicit, not missing.",
+     "details": [
+      "Repo: expand_daily_sales_grid(min_sales=50)",
+      "Price forward/back-filled per item",
+      "Why it matters: missing != no demand; enables lags and intermittency stats"
+     ],
+     "status": "live",
+     "prompt": "Context: Smart Retail Intelligence Network > Data Layer > Zero-filled daily grid. Full Cartesian product of active SKUs x calendar days so zero-sale days are explicit, not missing. Known points: Repo: expand_daily_sales_grid(min_sales=50); Price forward/back-filled per item; Why it matters: missing != no demand; enables lags and intermittency stats. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-3-3"
+    },
+    {
+     "label": "Inventory & batches",
+     "desc": "On-hand quantity per SKU per batch with manufacture and expiry dates.",
+     "details": [
+      "Needed for expiry risk and weeks-of-cover",
+      "Grain: store x SKU x batch x day snapshot"
+     ],
+     "status": "gap",
+     "prompt": "Context: Smart Retail Intelligence Network > Data Layer > Inventory & batches. On-hand quantity per SKU per batch with manufacture and expiry dates. Known points: Needed for expiry risk and weeks-of-cover; Grain: store x SKU x batch x day snapshot. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-3-4"
+    },
+    {
+     "label": "Product master",
+     "desc": "Category, brand, pack size, shelf life, unit cost, supplier, perishability class.",
+     "details": [
+      "Needed for peer comparison and margin floor"
+     ],
+     "status": "gap",
+     "prompt": "Context: Smart Retail Intelligence Network > Data Layer > Product master. Category, brand, pack size, shelf life, unit cost, supplier, perishability class. Known points: Needed for peer comparison and margin floor. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-3-5"
+    },
+    {
+     "label": "Supply chain events",
+     "desc": "Purchase orders, advance shipping notices, goods receipts, short-shipments, returns to vendor.",
+     "details": [
+      "Derives: lead time, fill rate, OTIF per supplier"
+     ],
+     "status": "gap",
+     "prompt": "Context: Smart Retail Intelligence Network > Data Layer > Supply chain events. Purchase orders, advance shipping notices, goods receipts, short-shipments, returns to vendor. Known points: Derives: lead time, fill rate, OTIF per supplier. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-3-6"
+    },
+    {
+     "label": "Prices & promotions",
+     "desc": "Shelf price history, discounts, promo flags, display/endcap placement.",
+     "details": [
+      "Repo: unit_price + rolling_30d_avg_unit_price + relative_price_ratio",
+      "Planned: promo calendar, discount depth"
+     ],
+     "status": "partial",
+     "prompt": "Context: Smart Retail Intelligence Network > Data Layer > Prices & promotions. Shelf price history, discounts, promo flags, display/endcap placement. Known points: Repo: unit_price + rolling_30d_avg_unit_price + relative_price_ratio; Planned: promo calendar, discount depth. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-3-7"
+    },
+    {
+     "label": "External signals",
+     "desc": "Things outside the store that move demand.",
+     "details": [
+      "Festival & holiday calendar (Diwali, Holi, Eid, Christmas, wedding season)",
+      "Weather (temperature, rain)",
+      "Local events, school terms, salary days",
+      "Competitor prices (optional)"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Data Layer > External signals. Things outside the store that move demand. Known points: Festival & holiday calendar (Diwali, Holi, Eid, Christmas, wedding season); Weather (temperature, rain); Local events, school terms, salary days; Competitor prices (optional). Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-3-8"
+    },
+    {
+     "label": "Store operations",
+     "desc": "Planogram, shelf facings, footfall, staff rota.",
+     "details": [
+      "Needed for shelf-presence analysis and task assignment"
+     ],
+     "status": "gap",
+     "prompt": "Context: Smart Retail Intelligence Network > Data Layer > Store operations. Planogram, shelf facings, footfall, staff rota. Known points: Needed for shelf-presence analysis and task assignment. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-3-9"
+    },
+    {
+     "label": "Data quality monitor",
+     "desc": "Automated checks before anything trains or predicts.",
+     "details": [
+      "Schema, nulls, negative stock, duplicate invoices, sudden volume drops",
+      "Great Expectations / pandera style rules",
+      "Fail loudly, never silently impute"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Data Layer > Data quality monitor. Automated checks before anything trains or predicts. Known points: Schema, nulls, negative stock, duplicate invoices, sudden volume drops; Great Expectations / pandera style rules; Fail loudly, never silently impute. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-3-10"
+    }
+   ],
+   "id": "n-3"
+  },
+  {
+   "label": "Feature Engineering",
+   "desc": "Signals computed from the data that let models see rhythm, momentum, price perception and risk.",
+   "details": [],
+   "status": "partial",
+   "prompt": "Extend features.py (RetailFeatureEngineer) with leakage-safe features for expiry risk, intermittency, stock cover, promotions, festivals and peer behaviour. Keep closed='left' on all rolling windows, compute per item_id, add pytest tests proving no future data leaks into any row.",
+   "kind": "branch",
+   "children": [
+    {
+     "label": "Calendar features",
+     "desc": "When the item-day happened.",
+     "details": [
+      "Repo: day_of_week, day_of_month, month, quarter, is_weekend, payday_flag (day 1-5)"
+     ],
+     "status": "live",
+     "prompt": "Context: Smart Retail Intelligence Network > Feature Engineering > Calendar features. When the item-day happened. Known points: Repo: day_of_week, day_of_month, month, quarter, is_weekend, payday_flag (day 1-5). Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-4-1"
+    },
+    {
+     "label": "Lag features",
+     "desc": "Demand on earlier days.",
+     "details": [
+      "Repo: lag_1, lag_7, lag_14, lag_30 days, per item, fillna(0)"
+     ],
+     "status": "live",
+     "prompt": "Context: Smart Retail Intelligence Network > Feature Engineering > Lag features. Demand on earlier days. Known points: Repo: lag_1, lag_7, lag_14, lag_30 days, per item, fillna(0). Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-4-2"
+    },
+    {
+     "label": "Rolling statistics",
+     "desc": "Recent level and volatility.",
+     "details": [
+      "Repo: 7d and 30d mean, std, min, max with closed='left'",
+      "Warm-up rows (30 days) dropped in transform()"
+     ],
+     "status": "live",
+     "prompt": "Context: Smart Retail Intelligence Network > Feature Engineering > Rolling statistics. Recent level and volatility. Known points: Repo: 7d and 30d mean, std, min, max with closed='left'; Warm-up rows (30 days) dropped in transform(). Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-4-3"
+    },
+    {
+     "label": "Price perception",
+     "desc": "Is today's price high or low versus normal?",
+     "details": [
+      "Repo: rolling_30d_avg_unit_price, relative_price_ratio"
+     ],
+     "status": "live",
+     "prompt": "Context: Smart Retail Intelligence Network > Feature Engineering > Price perception. Is today's price high or low versus normal? Known points: Repo: rolling_30d_avg_unit_price, relative_price_ratio. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-4-4"
+    },
+    {
+     "label": "Expiry & ageing features",
+     "desc": "How close stock is to being unsellable.",
+     "details": [
+      "days_to_expiry (min across batches)",
+      "stock_age_days",
+      "share_of_stock_expiring_7d",
+      "shelf_life_used_pct"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Feature Engineering > Expiry & ageing features. How close stock is to being unsellable. Known points: days_to_expiry (min across batches); stock_age_days; share_of_stock_expiring_7d; shelf_life_used_pct. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-4-5"
+    },
+    {
+     "label": "Inventory cover",
+     "desc": "How long current stock will last.",
+     "details": [
+      "weeks_of_cover = on_hand / forecast_weekly",
+      "sell_through_rate = sold / (sold + on_hand)",
+      "days_since_last_sale"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Feature Engineering > Inventory cover. How long current stock will last. Known points: weeks_of_cover = on_hand / forecast_weekly; sell_through_rate = sold / (sold + on_hand); days_since_last_sale. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-4-6"
+    },
+    {
+     "label": "Intermittency profile",
+     "desc": "How lumpy demand is.",
+     "details": [
+      "ADI (avg demand interval)",
+      "CV-squared of non-zero demand",
+      "Syntetos-Boylan class: smooth / erratic / intermittent / lumpy"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Feature Engineering > Intermittency profile. How lumpy demand is. Known points: ADI (avg demand interval); CV-squared of non-zero demand; Syntetos-Boylan class: smooth / erratic / intermittent / lumpy. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-4-7"
+    },
+    {
+     "label": "Promotion & event features",
+     "desc": "Special-day effects.",
+     "details": [
+      "promo_flag, discount_depth",
+      "days_to_next_festival, days_since_festival",
+      "weather_temp, rain_flag"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Feature Engineering > Promotion & event features. Special-day effects. Known points: promo_flag, discount_depth; days_to_next_festival, days_since_festival; weather_temp, rain_flag. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-4-8"
+    },
+    {
+     "label": "Peer & cross-SKU features",
+     "desc": "How the product behaves relative to similar products.",
+     "details": [
+      "category share of sales",
+      "peer median demand at same price band",
+      "substitute stockout flag (cannibalisation in reverse)"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Feature Engineering > Peer & cross-SKU features. How the product behaves relative to similar products. Known points: category share of sales; peer median demand at same price band; substitute stockout flag (cannibalisation in reverse). Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-4-9"
+    },
+    {
+     "label": "Supplier features",
+     "desc": "Supply-side reliability.",
+     "details": [
+      "lead_time_mean / std per supplier-SKU",
+      "last_fill_rate",
+      "open_po_qty, days_to_next_delivery"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Feature Engineering > Supplier features. Supply-side reliability. Known points: lead_time_mean / std per supplier-SKU; last_fill_rate; open_po_qty, days_to_next_delivery. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-4-10"
+    }
+   ],
+   "id": "n-4"
+  },
+  {
+   "label": "ML Core (the Network)",
+   "desc": "The models that think: forecasting, health scoring, risk, spikes, pricing, inventory and comparison.",
+   "details": [],
+   "status": "partial",
+   "prompt": "Design the ML core of a retail demand-intelligence system as cooperating models: a probabilistic demand forecaster, SKU health classifier, expiry-risk estimator, demand-spike detector, elasticity/pricing optimiser, inventory policy engine, supplier reliability model and peer-comparison engine. Show inputs, outputs, algorithms, metrics, and how outputs feed each other.",
+   "kind": "branch",
+   "children": [
+    {
+     "label": "Demand forecaster",
+     "desc": "Predicts units per SKU per day for the next 1-28 days, with uncertainty.",
+     "details": [],
+     "status": "partial",
+     "prompt": "Context: Smart Retail Intelligence Network > ML Core (the Network) > Demand forecaster. Predicts units per SKU per day for the next 1-28 days, with uncertainty. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [
+      {
+       "label": "Baselines",
+       "desc": "Benchmarks every model must beat.",
+       "details": [
+        "Seasonal naive (same weekday last week)",
+        "Moving average 7/28",
+        "Croston / TSB for intermittent SKUs"
+       ],
+       "status": "planned",
+       "prompt": "Context: Smart Retail Intelligence Network > ML Core (the Network) > Demand forecaster > Baselines. Benchmarks every model must beat. Known points: Seasonal naive (same weekday last week); Moving average 7/28; Croston / TSB for intermittent SKUs. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+       "kind": null,
+       "children": [],
+       "id": "n-5-1-1"
+      },
+      {
+       "label": "LightGBM Tweedie (primary)",
+       "desc": "Gradient boosting with Tweedie loss for zero-heavy, non-negative demand.",
+       "details": [
+        "Repo: LGBMRegressor(objective='regression_tweedie', n_estimators=200, lr=0.05)",
+        "Falls back to DummyRegressor if LightGBM missing",
+        "Tune tweedie_variance_power 1.1-1.5"
+       ],
+       "status": "partial",
+       "prompt": "Context: Smart Retail Intelligence Network > ML Core (the Network) > Demand forecaster > LightGBM Tweedie (primary). Gradient boosting with Tweedie loss for zero-heavy, non-negative demand. Known points: Repo: LGBMRegressor(objective='regression_tweedie', n_estimators=200, lr=0.05); Falls back to DummyRegressor if LightGBM missing; Tune tweedie_variance_power 1.1-1.5. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+       "kind": null,
+       "children": [],
+       "id": "n-5-1-2"
+      },
+      {
+       "label": "XGBoost challenger",
+       "desc": "Second GBM for ensembling and robustness.",
+       "details": [
+        "objective='reg:tweedie'"
+       ],
+       "status": "planned",
+       "prompt": "Context: Smart Retail Intelligence Network > ML Core (the Network) > Demand forecaster > XGBoost challenger. Second GBM for ensembling and robustness. Known points: objective='reg:tweedie'. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+       "kind": null,
+       "children": [],
+       "id": "n-5-1-3"
+      },
+      {
+       "label": "Quantile forecasts",
+       "desc": "P10 / P50 / P90 so ordering can respect risk.",
+       "details": [
+        "LightGBM objective='quantile' per alpha, or conformal intervals"
+       ],
+       "status": "planned",
+       "prompt": "Context: Smart Retail Intelligence Network > ML Core (the Network) > Demand forecaster > Quantile forecasts. P10 / P50 / P90 so ordering can respect risk. Known points: LightGBM objective='quantile' per alpha, or conformal intervals. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+       "kind": null,
+       "children": [],
+       "id": "n-5-1-4"
+      },
+      {
+       "label": "Hierarchical reconciliation",
+       "desc": "SKU forecasts add up to category and store totals.",
+       "details": [
+        "MinT / bottom-up reconciliation"
+       ],
+       "status": "planned",
+       "prompt": "Context: Smart Retail Intelligence Network > ML Core (the Network) > Demand forecaster > Hierarchical reconciliation. SKU forecasts add up to category and store totals. Known points: MinT / bottom-up reconciliation. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+       "kind": null,
+       "children": [],
+       "id": "n-5-1-5"
+      },
+      {
+       "label": "Deep models (later)",
+       "desc": "For large catalogues with rich covariates.",
+       "details": [
+        "Temporal Fusion Transformer, N-BEATS, DeepAR",
+        "Only if they beat GBM on WAPE in back-tests"
+       ],
+       "status": "planned",
+       "prompt": "Context: Smart Retail Intelligence Network > ML Core (the Network) > Demand forecaster > Deep models (later). For large catalogues with rich covariates. Known points: Temporal Fusion Transformer, N-BEATS, DeepAR; Only if they beat GBM on WAPE in back-tests. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+       "kind": null,
+       "children": [],
+       "id": "n-5-1-6"
+      }
+     ],
+     "id": "n-5-1"
+    },
+    {
+     "label": "SKU health classifier",
+     "desc": "Labels each SKU's life stage and whether it is healthy, at risk or dead.",
+     "details": [
+      "ABC (value) x XYZ (variability) matrix",
+      "Life stage: launch / growth / mature / decline / dead",
+      "Dead-stock rule + model: zero-sale streak, cover > N weeks, falling trend",
+      "Output: health score 0-100 with reason codes"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > ML Core (the Network) > SKU health classifier. Labels each SKU's life stage and whether it is healthy, at risk or dead. Known points: ABC (value) x XYZ (variability) matrix; Life stage: launch / growth / mature / decline / dead; Dead-stock rule + model: zero-sale streak, cover > N weeks, falling trend; Output: health score 0-100 with reason codes. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-5-2"
+    },
+    {
+     "label": "Expiry risk estimator",
+     "desc": "Probability that each batch expires before it sells.",
+     "details": [
+      "P(expire) = P(cumulative demand over remaining shelf life < batch qty) using the quantile forecast",
+      "FEFO-aware: oldest batch consumes demand first",
+      "Output: at-risk units, at-risk value, days left, suggested action"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > ML Core (the Network) > Expiry risk estimator. Probability that each batch expires before it sells. Known points: P(expire) = P(cumulative demand over remaining shelf life < batch qty) using the quantile forecast; FEFO-aware: oldest batch consumes demand first; Output: at-risk units, at-risk value, days left, suggested action. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-5-3"
+    },
+    {
+     "label": "Demand spike / hike detector",
+     "desc": "Spots surges early and tells you whether they will last.",
+     "details": [
+      "Residual z-score vs forecast, P90 band breaks",
+      "STL decomposition + changepoint (ruptures / PELT)",
+      "Isolation Forest for multivariate anomalies",
+      "Classify: one-off, festival, trend shift, data error"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > ML Core (the Network) > Demand spike / hike detector. Spots surges early and tells you whether they will last. Known points: Residual z-score vs forecast, P90 band breaks; STL decomposition + changepoint (ruptures / PELT); Isolation Forest for multivariate anomalies; Classify: one-off, festival, trend shift, data error. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-5-4"
+    },
+    {
+     "label": "Price elasticity & dynamic pricing",
+     "desc": "How demand responds to price and the best price within guardrails.",
+     "details": [
+      "Repo: demand_curve() log-log, Q = Q0 x (P0/P)^|e|",
+      "Repo: optimize_price() via scipy minimize_scalar, bounded",
+      "Guardrails: floor 1.15 x unit cost, ceiling min(1.2 x hist max, 2 x ref price)",
+      "Planned: per-SKU elasticity by regression on log-price, markdown ladders for near-expiry"
+     ],
+     "status": "partial",
+     "prompt": "Context: Smart Retail Intelligence Network > ML Core (the Network) > Price elasticity & dynamic pricing. How demand responds to price and the best price within guardrails. Known points: Repo: demand_curve() log-log, Q = Q0 x (P0/P)^|e|; Repo: optimize_price() via scipy minimize_scalar, bounded; Guardrails: floor 1.15 x unit cost, ceiling min(1.2 x hist max, 2 x ref price); Planned: per-SKU elasticity by regression on log-price, markdown ladders for near-expiry. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-5-5"
+    },
+    {
+     "label": "Inventory policy engine",
+     "desc": "Turns forecasts into order quantities.",
+     "details": [
+      "Safety stock = z x sigma_demand x sqrt(lead time)",
+      "Reorder point, order-up-to level",
+      "Newsvendor critical ratio for perishables",
+      "Respects MOQ, pack size, shelf capacity"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > ML Core (the Network) > Inventory policy engine. Turns forecasts into order quantities. Known points: Safety stock = z x sigma_demand x sqrt(lead time); Reorder point, order-up-to level; Newsvendor critical ratio for perishables; Respects MOQ, pack size, shelf capacity. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-5-6"
+    },
+    {
+     "label": "Supplier transparency model",
+     "desc": "Scores and predicts supplier behaviour.",
+     "details": [
+      "OTIF, fill rate, lead-time mean and variance",
+      "ETA prediction for open POs",
+      "Batch-to-supplier traceability for recalls and quality"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > ML Core (the Network) > Supplier transparency model. Scores and predicts supplier behaviour. Known points: OTIF, fill rate, lead-time mean and variance; ETA prediction for open POs; Batch-to-supplier traceability for recalls and quality. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-5-7"
+    },
+    {
+     "label": "Peer comparison engine",
+     "desc": "Analyses weak products side-by-side with well-fulfilled ones.",
+     "details": [
+      "Find peers: same category, price band, pack size (k-NN on product embeddings)",
+      "Compare demand, price ratio, facings, availability, promo exposure",
+      "Explains the gap: price too high? not on shelf? supply short?",
+      "Detects cannibalisation and substitution"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > ML Core (the Network) > Peer comparison engine. Analyses weak products side-by-side with well-fulfilled ones. Known points: Find peers: same category, price band, pack size (k-NN on product embeddings); Compare demand, price ratio, facings, availability, promo exposure; Explains the gap: price too high? not on shelf? supply short?; Detects cannibalisation and substitution. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-5-8"
+    },
+    {
+     "label": "Explainability",
+     "desc": "Every prediction comes with reasons people trust.",
+     "details": [
+      "SHAP values per forecast",
+      "Reason codes mapped to plain sentences (EN/HI)",
+      "Elasticity and peer-gap charts"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > ML Core (the Network) > Explainability. Every prediction comes with reasons people trust. Known points: SHAP values per forecast; Reason codes mapped to plain sentences (EN/HI); Elasticity and peer-gap charts. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-5-9"
+    }
+   ],
+   "id": "n-5"
+  },
+  {
+   "label": "Decision & Action Engine",
+   "desc": "Converts model outputs into ranked, explainable actions with a human in the loop.",
+   "details": [],
+   "status": "planned",
+   "prompt": "Build a rules-plus-optimisation action engine that turns forecasts, expiry risk, SKU health, spike alerts, supplier scores and peer gaps into a ranked daily action list (reorder, markdown, re-face, transfer, return, donate, delist). Each action has expected rupee impact, urgency, owner role, reason text, and approve/override capture for feedback.",
+   "kind": "branch",
+   "children": [
+    {
+     "label": "Action catalogue",
+     "desc": "What the system can recommend.",
+     "details": [
+      "Reorder qty / skip order",
+      "Markdown % (ladder: 10 -> 25 -> 40)",
+      "Move to eye level / endcap, add facings",
+      "Bundle with a fast mover",
+      "Transfer to another store",
+      "Return to vendor",
+      "Donate before expiry",
+      "Delist SKU"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Decision & Action Engine > Action catalogue. What the system can recommend. Known points: Reorder qty / skip order; Markdown % (ladder: 10 -> 25 -> 40); Move to eye level / endcap, add facings; Bundle with a fast mover; Transfer to another store; Return to vendor; Donate before expiry; Delist SKU. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-6-1"
+    },
+    {
+     "label": "Prioritisation",
+     "desc": "Rank by money at stake x urgency x effort.",
+     "details": [
+      "Score = expected rupee impact x urgency weight / effort minutes",
+      "Caps tasks per worker per shift"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Decision & Action Engine > Prioritisation. Rank by money at stake x urgency x effort. Known points: Score = expected rupee impact x urgency weight / effort minutes; Caps tasks per worker per shift. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-6-2"
+    },
+    {
+     "label": "Alerts",
+     "desc": "Push only what matters.",
+     "details": [
+      "Expiry in <= 3 days with risk > 60%",
+      "Spike detected on A-class SKU",
+      "Supplier ETA slip > 2 days",
+      "Quiet hours and digest mode"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Decision & Action Engine > Alerts. Push only what matters. Known points: Expiry in <= 3 days with risk > 60%; Spike detected on A-class SKU; Supplier ETA slip > 2 days; Quiet hours and digest mode. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-6-3"
+    },
+    {
+     "label": "Human in the loop",
+     "desc": "People approve, edit or reject; the system learns.",
+     "details": [
+      "Override reasons captured as labels",
+      "Track acceptance rate per action type"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Decision & Action Engine > Human in the loop. People approve, edit or reject; the system learns. Known points: Override reasons captured as labels; Track acceptance rate per action type. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-6-4"
+    },
+    {
+     "label": "Feedback loop",
+     "desc": "Outcomes flow back into training.",
+     "details": [
+      "Did the markdown sell through?",
+      "Was the spike real?",
+      "Retrain weekly with new labels"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Decision & Action Engine > Feedback loop. Outcomes flow back into training. Known points: Did the markdown sell through?; Was the spike real?; Retrain weekly with new labels. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-6-5"
+    }
+   ],
+   "id": "n-6"
+  },
+  {
+   "label": "Interfaces",
+   "desc": "Where people meet the network.",
+   "details": [],
+   "status": "planned",
+   "prompt": "Design the interfaces for a retail demand-intelligence system: manager web dashboard, worker mobile app (bilingual English/Hindi, barcode scan, voice, offline-first), supplier portal and a REST API. Give screen lists, key components, and the data each screen reads.",
+   "kind": "branch",
+   "children": [
+    {
+     "label": "Manager dashboard",
+     "desc": "Web app with KPIs, exceptions and approvals.",
+     "details": [
+      "Waste, stockouts, margin, forecast accuracy",
+      "SKU health map, expiry calendar, spike feed"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Interfaces > Manager dashboard. Web app with KPIs, exceptions and approvals. Known points: Waste, stockouts, margin, forecast accuracy; SKU health map, expiry calendar, spike feed. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-7-1"
+    },
+    {
+     "label": "Worker mobile app",
+     "desc": "The humane front line.",
+     "details": [
+      "Shift task list ranked by impact",
+      "Scan barcode -> see stock, expiry, action",
+      "English / Hindi, voice prompts, large buttons, works offline"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Interfaces > Worker mobile app. The humane front line. Known points: Shift task list ranked by impact; Scan barcode -> see stock, expiry, action; English / Hindi, voice prompts, large buttons, works offline. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-7-2"
+    },
+    {
+     "label": "Supplier portal",
+     "desc": "Shared demand outlook and scorecards.",
+     "details": [
+      "Forecast for next 4 weeks, open POs, OTIF score"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Interfaces > Supplier portal. Shared demand outlook and scorecards. Known points: Forecast for next 4 weeks, open POs, OTIF score. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-7-3"
+    },
+    {
+     "label": "REST API",
+     "desc": "For POS, ERP and other apps.",
+     "details": [
+      "FastAPI: /forecast, /sku-health, /expiry-risk, /price, /actions",
+      "Auth: API keys + role-based access"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Interfaces > REST API. For POS, ERP and other apps. Known points: FastAPI: /forecast, /sku-health, /expiry-risk, /price, /actions; Auth: API keys + role-based access. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-7-4"
+    }
+   ],
+   "id": "n-7"
+  },
+  {
+   "label": "Evaluation & KPIs",
+   "desc": "How we know the models and the business are getting better.",
+   "details": [],
+   "status": "partial",
+   "prompt": "Write an evaluation plan for a retail forecasting and action system: expanding-window back-tests, metrics (WAPE, MAE, RMSE, bias, pinball loss, interval coverage), per-segment reporting (ABC/XYZ, intermittency class), and business KPIs (waste %, stockout rate, sell-through, turns, GMROI, worker hours). Include an A/B or pilot-vs-control store design.",
+   "kind": "branch",
+   "children": [
+    {
+     "label": "Validation scheme",
+     "desc": "No peeking into the future.",
+     "details": [
+      "Repo: TimeSeriesSplit expanding window, n_splits=3",
+      "Planned: rolling-origin back-test per week, horizon 1-28 days"
+     ],
+     "status": "live",
+     "prompt": "Context: Smart Retail Intelligence Network > Evaluation & KPIs > Validation scheme. No peeking into the future. Known points: Repo: TimeSeriesSplit expanding window, n_splits=3; Planned: rolling-origin back-test per week, horizon 1-28 days. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-8-1"
+    },
+    {
+     "label": "Model metrics",
+     "desc": "Accuracy and calibration.",
+     "details": [
+      "Repo: WAPE, RMSE, MAE",
+      "Planned: bias, pinball loss, P10-P90 coverage, MASE"
+     ],
+     "status": "partial",
+     "prompt": "Context: Smart Retail Intelligence Network > Evaluation & KPIs > Model metrics. Accuracy and calibration. Known points: Repo: WAPE, RMSE, MAE; Planned: bias, pinball loss, P10-P90 coverage, MASE. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-8-2"
+    },
+    {
+     "label": "Business KPIs",
+     "desc": "What owners care about.",
+     "details": [
+      "Waste / expiry write-off %",
+      "Stockout rate, on-shelf availability",
+      "Sell-through, inventory turns, GMROI",
+      "Gross margin",
+      "Worker hours on ordering"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Evaluation & KPIs > Business KPIs. What owners care about. Known points: Waste / expiry write-off %; Stockout rate, on-shelf availability; Sell-through, inventory turns, GMROI; Gross margin; Worker hours on ordering. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-8-3"
+    },
+    {
+     "label": "Pilot design",
+     "desc": "Prove impact causally.",
+     "details": [
+      "Matched pilot vs control stores",
+      "8-12 week run, difference-in-differences"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Evaluation & KPIs > Pilot design. Prove impact causally. Known points: Matched pilot vs control stores; 8-12 week run, difference-in-differences. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-8-4"
+    }
+   ],
+   "id": "n-8"
+  },
+  {
+   "label": "Architecture & MLOps",
+   "desc": "How the system is built, run and kept healthy.",
+   "details": [],
+   "status": "partial",
+   "prompt": "Propose a lean production architecture for a retail ML system built in Python: ingestion (batch from POS/ERP), PostgreSQL + Parquet storage, feature pipeline, training with MLflow tracking, model registry, FastAPI serving, Prefect/Airflow scheduling, drift monitoring, pytest + GitHub Actions CI, Docker deployment. Include a folder layout that extends the existing src/ modules.",
+   "kind": "branch",
+   "children": [
+    {
+     "label": "Repo modules (today)",
+     "desc": "What exists in the codebase.",
+     "details": [
+      "src/data_loader.py - ingestion, cleaning, zero-fill grid",
+      "src/features.py - RetailFeatureEngineer",
+      "src/forecasting.py - WAPE, time_series_cv_evaluate",
+      "src/pricing_engine.py - demand_curve, optimize_price",
+      "notebooks/02_eda_analysis.ipynb",
+      "tests/test_pipeline.py"
+     ],
+     "status": "live",
+     "prompt": "Context: Smart Retail Intelligence Network > Architecture & MLOps > Repo modules (today). What exists in the codebase. Known points: src/data_loader.py - ingestion, cleaning, zero-fill grid; src/features.py - RetailFeatureEngineer; src/forecasting.py - WAPE, time_series_cv_evaluate; src/pricing_engine.py - demand_curve, optimize_price; notebooks/02_eda_analysis.ipynb; tests/test_pipeline.py. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-9-1"
+    },
+    {
+     "label": "Pipelines",
+     "desc": "Daily batch flow.",
+     "details": [
+      "ingest -> validate -> grid -> features -> predict -> actions -> publish",
+      "Weekly retrain, monthly elasticity refresh"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Architecture & MLOps > Pipelines. Daily batch flow. Known points: ingest -> validate -> grid -> features -> predict -> actions -> publish; Weekly retrain, monthly elasticity refresh. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-9-2"
+    },
+    {
+     "label": "Storage",
+     "desc": "Where data lives.",
+     "details": [
+      "PostgreSQL for ops tables",
+      "Parquet / DuckDB for analytics",
+      "Feature store (Feast) when multi-store"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Architecture & MLOps > Storage. Where data lives. Known points: PostgreSQL for ops tables; Parquet / DuckDB for analytics; Feature store (Feast) when multi-store. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-9-3"
+    },
+    {
+     "label": "Training & registry",
+     "desc": "Reproducible models.",
+     "details": [
+      "MLflow experiments + registry",
+      "Seeds fixed (random_state=42 in repo)"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Architecture & MLOps > Training & registry. Reproducible models. Known points: MLflow experiments + registry; Seeds fixed (random_state=42 in repo). Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-9-4"
+    },
+    {
+     "label": "Serving",
+     "desc": "Predictions to apps.",
+     "details": [
+      "FastAPI + Docker",
+      "Batch scoring job writes action table"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Architecture & MLOps > Serving. Predictions to apps. Known points: FastAPI + Docker; Batch scoring job writes action table. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-9-5"
+    },
+    {
+     "label": "Monitoring",
+     "desc": "Catch decay early.",
+     "details": [
+      "Data drift (PSI), forecast error drift",
+      "Alert if WAPE worsens > 20% week on week"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Architecture & MLOps > Monitoring. Catch decay early. Known points: Data drift (PSI), forecast error drift; Alert if WAPE worsens > 20% week on week. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-9-6"
+    },
+    {
+     "label": "Testing & CI",
+     "desc": "Trust every change.",
+     "details": [
+      "pytest unit + leakage tests",
+      "GitHub Actions on push",
+      "Notebook smoke test (tmp_validate_notebook.py)"
+     ],
+     "status": "partial",
+     "prompt": "Context: Smart Retail Intelligence Network > Architecture & MLOps > Testing & CI. Trust every change. Known points: pytest unit + leakage tests; GitHub Actions on push; Notebook smoke test (tmp_validate_notebook.py). Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-9-7"
+    }
+   ],
+   "id": "n-9"
+  },
+  {
+   "label": "Current State & Gaps",
+   "desc": "An honest read of the reference repo as uploaded.",
+   "details": [],
+   "status": "gap",
+   "prompt": "Fix the Smart Retail Forecasting repo so tests pass: (1) add add_feature_columns(df) to src/features.py or update forecasting.py and tests to use RetailFeatureEngineer; (2) align test column names with the loader's item_id / quantity / unit_price / invoice_date schema; (3) make transform() merge temporal, lag and rolling features instead of overwriting them; (4) cast relative_price_ratio to float; (5) add an expiry-aware salvage term to optimize_price(); (6) add src/__init__.py and notebooks 01, 03, 04; (7) remove .venv from the archive and add a .gitignore. Show the diff and the passing pytest output.",
+   "kind": "branch",
+   "children": [
+    {
+     "label": "Works",
+     "desc": "Solid foundations already in place.",
+     "details": [
+      "Robust cleaning and zero-filled grid",
+      "Leakage-aware lags and rolling windows",
+      "Tweedie GBM with time-series CV",
+      "Bounded price optimiser with margin floor",
+      "EDA notebook with 4 diagnostics"
+     ],
+     "status": "live",
+     "prompt": "Context: Smart Retail Intelligence Network > Current State & Gaps > Works. Solid foundations already in place. Known points: Robust cleaning and zero-filled grid; Leakage-aware lags and rolling windows; Tweedie GBM with time-series CV; Bounded price optimiser with margin floor; EDA notebook with 4 diagnostics. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-10-1"
+    },
+    {
+     "label": "Broken import",
+     "desc": "forecasting.py and tests import add_feature_columns, which features.py does not define, so pytest fails at collection.",
+     "details": [],
+     "status": "gap",
+     "prompt": "Context: Smart Retail Intelligence Network > Current State & Gaps > Broken import. forecasting.py and tests import add_feature_columns, which features.py does not define, so pytest fails at collection. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-10-2"
+    },
+    {
+     "label": "Schema mismatch",
+     "desc": "Tests expect StockCode / Quantity columns, but clean_transactions() renames them to item_id / quantity.",
+     "details": [],
+     "status": "gap",
+     "prompt": "Context: Smart Retail Intelligence Network > Current State & Gaps > Schema mismatch. Tests expect StockCode / Quantity columns, but clean_transactions() renames them to item_id / quantity. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-10-3"
+    },
+    {
+     "label": "Missing pieces",
+     "desc": "Things the README promises but the repo lacks.",
+     "details": [
+      "notebooks 01, 03, 04",
+      "src/__init__.py",
+      "raw data (UCI Online Retail II)",
+      "no inventory, expiry or supplier data yet"
+     ],
+     "status": "gap",
+     "prompt": "Context: Smart Retail Intelligence Network > Current State & Gaps > Missing pieces. Things the README promises but the repo lacks. Known points: notebooks 01, 03, 04; src/__init__.py; raw data (UCI Online Retail II); no inventory, expiry or supplier data yet. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-10-4"
+    },
+    {
+     "label": "transform() drops features",
+     "desc": "RetailFeatureEngineer.transform() reassigns 'combined' from self.data at each step, so calendar and lag features are silently lost; only rolling features reach the output CSV.",
+     "details": [
+      "Fix: build temporal, lag and rolling frames from one base and merge on item_id + invoice_date",
+      "Add a test asserting every LAG_WINDOWS column is present"
+     ],
+     "status": "gap",
+     "prompt": "Context: Smart Retail Intelligence Network > Current State & Gaps > transform() drops features. RetailFeatureEngineer.transform() reassigns 'combined' from self.data at each step, so calendar and lag features are silently lost; only rolling features reach the output CSV. Known points: Fix: build temporal, lag and rolling frames from one base and merge on item_id + invoice_date; Add a test asserting every LAG_WINDOWS column is present. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-10-5"
+    },
+    {
+     "label": "Object dtype bug",
+     "desc": "relative_price_ratio becomes dtype object after replace(0, pd.NA), and LightGBM refuses to train on it.",
+     "details": [
+      "Fix: .astype(float) after fillna, or replace(0, np.nan)"
+     ],
+     "status": "gap",
+     "prompt": "Context: Smart Retail Intelligence Network > Current State & Gaps > Object dtype bug. relative_price_ratio becomes dtype object after replace(0, pd.NA), and LightGBM refuses to train on it. Known points: Fix: .astype(float) after fillna, or replace(0, np.nan). Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-10-6"
+    },
+    {
+     "label": "Pricing ignores expiry",
+     "desc": "optimize_price() assumes unsold stock keeps its value, so for a batch expiring in 2 days it recommends raising the price.",
+     "details": [
+      "Fix: add a salvage value / waste cost term for units left at expiry",
+      "Demo: Paneer 40 units, 2 days left -> repo says Rs 108; expiry-aware says Rs 58"
+     ],
+     "status": "gap",
+     "prompt": "Context: Smart Retail Intelligence Network > Current State & Gaps > Pricing ignores expiry. optimize_price() assumes unsold stock keeps its value, so for a batch expiring in 2 days it recommends raising the price. Known points: Fix: add a salvage value / waste cost term for units left at expiry; Demo: Paneer 40 units, 2 days left -> repo says Rs 108; expiry-aware says Rs 58. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-10-7"
+    },
+    {
+     "label": "Toy sample data",
+     "desc": "processed CSV has 3 items x 30 days with 80% zeros, so EDA charts are flat; real data is needed before any conclusions.",
+     "details": [],
+     "status": "gap",
+     "prompt": "Context: Smart Retail Intelligence Network > Current State & Gaps > Toy sample data. processed CSV has 3 items x 30 days with 80% zeros, so EDA charts are flat; real data is needed before any conclusions. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-10-8"
+    },
+    {
+     "label": "Housekeeping",
+     "desc": "The archive ships a Windows .venv (thousands of files) and a tmp script.",
+     "details": [],
+     "status": "gap",
+     "prompt": "Context: Smart Retail Intelligence Network > Current State & Gaps > Housekeeping. The archive ships a Windows .venv (thousands of files) and a tmp script. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-10-9"
+    }
+   ],
+   "id": "n-10"
+  },
+  {
+   "label": "Roadmap",
+   "desc": "Phased build from today's repo to a store pilot.",
+   "details": [],
+   "status": "planned",
+   "prompt": "Turn this roadmap into a sprint plan with tasks, owners (roles), estimates and acceptance criteria for a 4-person student team building a retail AI system over 16 weeks.",
+   "kind": "branch",
+   "children": [
+    {
+     "label": "Phase 0 - Fix foundation (wk 1-2)",
+     "desc": "Green tests, clean repo, real dataset loaded.",
+     "details": [
+      "Fix imports and schema",
+      "Load UCI Online Retail II",
+      "CI on GitHub"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Roadmap > Phase 0 - Fix foundation (wk 1-2). Green tests, clean repo, real dataset loaded. Known points: Fix imports and schema; Load UCI Online Retail II; CI on GitHub. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-11-1"
+    },
+    {
+     "label": "Phase 1 - Forecast MVP (wk 3-5)",
+     "desc": "Beat baselines with LightGBM Tweedie.",
+     "details": [
+      "Back-tests, WAPE by segment",
+      "Quantile P10/P50/P90"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Roadmap > Phase 1 - Forecast MVP (wk 3-5). Beat baselines with LightGBM Tweedie. Known points: Back-tests, WAPE by segment; Quantile P10/P50/P90. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-11-2"
+    },
+    {
+     "label": "Phase 2 - Risk radar (wk 6-8)",
+     "desc": "SKU health, expiry risk, spike detector.",
+     "details": [
+      "Synthetic batch/expiry generator until real data",
+      "Reason codes"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Roadmap > Phase 2 - Risk radar (wk 6-8). SKU health, expiry risk, spike detector. Known points: Synthetic batch/expiry generator until real data; Reason codes. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-11-3"
+    },
+    {
+     "label": "Phase 3 - Act (wk 9-11)",
+     "desc": "Pricing, markdown ladders, reorder engine, action list.",
+     "details": [
+      "Guardrails reviewed with a store owner"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Roadmap > Phase 3 - Act (wk 9-11). Pricing, markdown ladders, reorder engine, action list. Known points: Guardrails reviewed with a store owner. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-11-4"
+    },
+    {
+     "label": "Phase 4 - See the chain (wk 12-13)",
+     "desc": "Supplier scorecards and peer comparison.",
+     "details": [
+      "OTIF, lead-time model, k-NN peers"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Roadmap > Phase 4 - See the chain (wk 12-13). Supplier scorecards and peer comparison. Known points: OTIF, lead-time model, k-NN peers. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-11-5"
+    },
+    {
+     "label": "Phase 5 - Pilot (wk 14-16)",
+     "desc": "Dashboard + worker app in 1-2 real stores.",
+     "details": [
+      "Pilot vs control KPIs",
+      "Collect worker feedback"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Roadmap > Phase 5 - Pilot (wk 14-16). Dashboard + worker app in 1-2 real stores. Known points: Pilot vs control KPIs; Collect worker feedback. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-11-6"
+    }
+   ],
+   "id": "n-11"
+  },
+  {
+   "label": "Ethics, Risk & Humane Design",
+   "desc": "Guardrails so the system helps people and treats customers fairly.",
+   "details": [],
+   "status": "planned",
+   "prompt": "Write the responsible-AI section for a retail demand-intelligence system: worker augmentation not surveillance, explainability, fair pricing guardrails for essentials, customer data privacy (DPDP Act 2023 in India), food donation over destruction, bias across store locations, cold-start and failure modes, and a human override policy.",
+   "kind": "branch",
+   "children": [
+    {
+     "label": "Augment, don't replace",
+     "desc": "Workers decide; the system suggests and explains.",
+     "details": [
+      "No individual productivity scoring from the app"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Ethics, Risk & Humane Design > Augment, don't replace. Workers decide; the system suggests and explains. Known points: No individual productivity scoring from the app. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-12-1"
+    },
+    {
+     "label": "Fair pricing",
+     "desc": "No surge pricing on essentials during spikes or emergencies.",
+     "details": [
+      "Hard ceiling on staples, audit log of price changes"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Ethics, Risk & Humane Design > Fair pricing. No surge pricing on essentials during spikes or emergencies. Known points: Hard ceiling on staples, audit log of price changes. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-12-2"
+    },
+    {
+     "label": "Privacy",
+     "desc": "Aggregate demand only; no customer PII needed.",
+     "details": [
+      "Align with India's DPDP Act 2023"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Ethics, Risk & Humane Design > Privacy. Aggregate demand only; no customer PII needed. Known points: Align with India's DPDP Act 2023. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-12-3"
+    },
+    {
+     "label": "Waste to worth",
+     "desc": "Prefer donation and transfer over destruction.",
+     "details": [
+      "Food-bank partner workflow for near-expiry items"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Ethics, Risk & Humane Design > Waste to worth. Prefer donation and transfer over destruction. Known points: Food-bank partner workflow for near-expiry items. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-12-4"
+    },
+    {
+     "label": "Failure modes",
+     "desc": "Know when not to trust the model.",
+     "details": [
+      "Cold-start SKUs use category priors",
+      "Low-confidence flag hides auto-actions",
+      "Fallback to last good model"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Ethics, Risk & Humane Design > Failure modes. Know when not to trust the model. Known points: Cold-start SKUs use category priors; Low-confidence flag hides auto-actions; Fallback to last good model. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-12-5"
+    }
+   ],
+   "id": "n-12"
+  },
+  {
+   "label": "Prompt Library",
+   "desc": "Ready-to-use prompts that reuse this map as context.",
+   "details": [],
+   "status": "planned",
+   "prompt": "Using the Smart Retail Intelligence Network map as context, generate the next most valuable prompt for me based on the branch I name.",
+   "kind": "branch",
+   "children": [
+    {
+     "label": "Code prompt template",
+     "desc": "For implementation work.",
+     "details": [
+      "'Using <node> context, implement <function> in src/<module>.py with type hints, docstring, pytest tests, no future leakage.'"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Prompt Library > Code prompt template. For implementation work. Known points: 'Using <node> context, implement <function> in src/<module>.py with type hints, docstring, pytest tests, no future leakage.'. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-13-1"
+    },
+    {
+     "label": "Analysis prompt template",
+     "desc": "For notebooks and EDA.",
+     "details": [
+      "'Write notebook 0X that <goal>, using daily_demand_features.csv, with charts and a 3-line takeaway per chart.'"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Prompt Library > Analysis prompt template. For notebooks and EDA. Known points: 'Write notebook 0X that <goal>, using daily_demand_features.csv, with charts and a 3-line takeaway per chart.'. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-13-2"
+    },
+    {
+     "label": "Design prompt template",
+     "desc": "For UI / architecture.",
+     "details": [
+      "'Design <screen/system> for <persona> showing <data>, bilingual, mobile-first.'"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Prompt Library > Design prompt template. For UI / architecture. Known points: 'Design <screen/system> for <persona> showing <data>, bilingual, mobile-first.'. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-13-3"
+    },
+    {
+     "label": "Report prompt template",
+     "desc": "For writing.",
+     "details": [
+      "'Write the <section> of the project report in formal academic tone, 400 words, cite the repo module names.'"
+     ],
+     "status": "planned",
+     "prompt": "Context: Smart Retail Intelligence Network > Prompt Library > Report prompt template. For writing. Known points: 'Write the <section> of the project report in formal academic tone, 400 words, cite the repo module names.'. Task: design and implement this part in Python for the existing repo (src/ modules, pandas, LightGBM, SciPy). Give the approach, data needed, code with type hints, pytest tests, and how its output feeds the action engine.",
+     "kind": null,
+     "children": [],
+     "id": "n-13-4"
+    }
+   ],
+   "id": "n-13"
+  }
+ ],
+ "id": "n"
+}

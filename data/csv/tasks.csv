@@ -1,0 +1,9 @@
+id,type,sku_id,params,impact_rs,minutes,urgency,role,status,priority
+t3,move_front,festive-sweets-box-500g,"{""mult"": 6, ""qty"": 60}",4200,15,3,floor,open,840
+t4,return_vendor,imported-cheese-spread,"{""weeks"": 102, ""units"": 36}",7434,20,2,floor,open,743
+t5,fefo,toned-milk-500ml,"{""units"": 70}",883,5,3,floor,open,530
+t7,reorder,instant-noodles-70g,"{""qty"": 180}",900,3,1,manager,open,300
+t2,shelf_check,ragi-flour-1kg,"{""units"": 38, ""days"": 14}",570,8,2,floor,open,142
+t6,markdown,brown-bread-400g,"{""price"": 34, ""units"": 30, ""days"": 2}",410,6,2,floor,open,137
+t1,markdown,paneer-200g,"{""price"": 58, ""units"": 40, ""days"": 2}",371,10,3,floor,open,111
+t8,donate,brown-bread-400g,"{""units"": 8}",0,10,1,manager,open,0

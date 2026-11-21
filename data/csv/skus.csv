@@ -1,0 +1,15 @@
+id,name,category,shelf_life_days,unit_cost,price,elasticity,supplier_id,health_cls,health_score,health_cover_weeks,health_trend,health_days_since_sale,health_on_hand,health_daily_rate,health_at_risk_units,health_at_risk_value,health_p_expire,health_reason
+toned-milk-500ml,Toned Milk 500ml,Dairy,3,24.0,28.0,-0.6,sup-gokul,Expiry risk,41,0.4,0.99,0,130,41.32,36.8,883,1.0,37 of 130 units likely to expire unsold
+paneer-200g,Paneer 200g,Dairy,7,70.0,90.0,-1.4,sup-gokul,Expiry risk,42,0.9,1.05,0,65,10.82,21.6,1512,1.0,22 of 65 units likely to expire unsold
+brown-bread-400g,Brown Bread 400g,Bakery,5,32.0,45.0,-1.2,sup-sunrise,Expiry risk,40,1.0,0.84,0,30,4.43,21.1,677,1.0,21 of 30 units likely to expire unsold
+instant-noodles-70g,Instant Noodles 70g,Snacks,240,10.0,14.0,-1.1,sup-crunch,Healthy,86,1.1,1.17,0,300,37.71,0.0,0,0.0,"1.1 weeks of cover, trend 1.17x"
+masala-chips-50g,Masala Chips 50g,Snacks,120,14.0,20.0,-1.3,sup-crunch,Healthy,84,1.4,1.01,0,260,26.46,0.0,0,0.0,"1.4 weeks of cover, trend 1.01x"
+festive-sweets-box-500g,Festive Sweets Box 500g,Sweets,10,180.0,260.0,-1.6,sup-mithas,Expiry risk,64,0.7,3.26,0,45,9.5,7.4,1337,0.85,7 of 45 units likely to expire unsold
+basmati-rice-5kg,Basmati Rice 5kg,Staples,365,520.0,640.0,-0.8,sup-annapurna,Healthy,86,1.0,1.16,0,40,5.79,0.0,0,0.0,"1.0 weeks of cover, trend 1.16x"
+sunflower-oil-1l,Sunflower Oil 1L,Staples,270,120.0,150.0,-0.9,sup-annapurna,Healthy,86,1.4,1.24,0,80,8.14,0.0,0,0.0,"1.4 weeks of cover, trend 1.24x"
+wheat-atta-5kg,Wheat Atta 5kg,Flour,120,210.0,260.0,-0.9,sup-annapurna,Healthy,85,1.7,1.06,0,90,7.68,0.0,0,0.0,"1.7 weeks of cover, trend 1.06x"
+besan-1kg,Besan 1kg,Flour,180,85.0,110.0,-1.0,sup-annapurna,Healthy,85,1.3,1.09,0,45,5.04,0.0,0,0.0,"1.3 weeks of cover, trend 1.09x"
+ragi-flour-1kg,Ragi Flour 1kg,Flour,150,70.0,95.0,-1.0,sup-annapurna,Shelf gap,28,3.5,0.47,14,38,1.54,0.0,0,0.0,In stock (38) but no sale for 14 days while flour peers sell daily
+green-tea-25-bags,Green Tea 25 bags,Beverages,540,110.0,160.0,-1.2,sup-leafline,Watch,55,7.5,1.0,0,60,1.14,0.0,0,0.0,"Demand trend 1.00x, 7.5 weeks of cover"
+imported-cheese-spread,Imported Cheese Spread,Dairy,60,210.0,320.0,-1.8,sup-gokul,Dead,3,102.9,0.2,38,36,0.05,35.4,7434,1.0,"103 weeks of cover, sales down 80% vs prior 4 weeks"
+frozen-peas-500g,Frozen Peas 500g,Frozen,180,55.0,75.0,-1.1,sup-coldchain,Healthy,87,1.6,1.3,0,70,6.39,0.0,0,0.0,"1.6 weeks of cover, trend 1.30x"

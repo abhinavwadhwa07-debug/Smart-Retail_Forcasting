@@ -1,0 +1,17 @@
+id,sku_id,qty,days_left,expiry_date,expected_unsold,value_at_risk,p_expire
+toned-milk-500ml-b1,toned-milk-500ml,70,1,2026-11-11,28.7,688,1.0
+toned-milk-500ml-b2,toned-milk-500ml,60,3,2026-11-13,8.1,195,0.69
+paneer-200g-b1,paneer-200g,40,2,2026-11-12,18.4,1285,1.0
+paneer-200g-b2,paneer-200g,25,6,2026-11-16,3.3,228,0.49
+brown-bread-400g-b1,brown-bread-400g,30,2,2026-11-12,21.1,676,1.0
+instant-noodles-70g-b1,instant-noodles-70g,300,200,2027-05-29,0.0,0,0.0
+masala-chips-50g-b1,masala-chips-50g,260,90,2027-02-08,0.0,0,0.0
+festive-sweets-box-500g-b1,festive-sweets-box-500g,45,4,2026-11-14,7.4,1337,0.85
+basmati-rice-5kg-b1,basmati-rice-5kg,40,300,2027-09-06,0.0,0,0.0
+sunflower-oil-1l-b1,sunflower-oil-1l,80,200,2027-05-29,0.0,0,0.0
+wheat-atta-5kg-b1,wheat-atta-5kg,90,80,2027-01-29,0.0,0,0.0
+besan-1kg-b1,besan-1kg,45,120,2027-03-10,0.0,0,0.0
+ragi-flour-1kg-b1,ragi-flour-1kg,38,110,2027-02-28,0.0,0,0.0
+green-tea-25-bags-b1,green-tea-25-bags,60,400,2027-12-15,0.0,0,0.0
+imported-cheese-spread-b1,imported-cheese-spread,36,12,2026-11-22,35.4,7434,1.0
+frozen-peas-500g-b1,frozen-peas-500g,70,150,2027-04-09,0.0,0,0.0

@@ -1,0 +1,8 @@
+id,name,categories,otif,fill_rate,lead_time_mean,lead_time_sd,score
+sup-gokul,Gokul Dairy Co-op,Dairy,0.91,0.96,1.1,0.3,92
+sup-sunrise,Sunrise Bakers,Bakery,0.84,0.93,1.4,0.6,86
+sup-crunch,Crunch Foods Distributors,Snacks,0.88,0.95,3.2,0.9,86
+sup-mithas,Mithas Sweets,Sweets,0.72,0.86,2.8,1.6,71
+sup-annapurna,Annapurna Grains,"Staples, Flour",0.94,0.98,4.0,0.8,91
+sup-leafline,Leafline Teas,Beverages,0.97,0.99,6.5,1.1,91
+sup-coldchain,ColdChain Frozen,"Frozen, Dairy",0.66,0.81,5.2,2.4,61
